@@ -1,0 +1,42 @@
+# Each entry has the following schema:
+#
+# - title: mytitle   # Title of chapter or subchapter
+#   file: myfile  # filename relative to the  folder.
+#   sections:  # Contains a list of more entries that make up the chapter's subchapters
+#
+# Below are some special values that trigger specific behavior:
+# - header: My Header  # Will insert a header with no link in the sidebar
+
+# ===== Main Landing Page ========================================
+format: jb-book
+root: index
+chapters:
+  # ===== Foreword Section ========================================
+  - file: aim1/aim1
+    sections:
+      - title: Chapter 1
+        file: aim1/chapter1
+      - title: Chapter 2
+        file: aim1/chapter2
+
+  # ===== Guide for Reproducible Research ========================================
+  - file: aim2/aim2
+    sections:
+      - title: Chapter 3
+        file: aim2/part1
+        sections:
+          - title: "3.1"
+            file: aim2/part1/part1_1
+          - title: "3.2"
+            file: aim2/part1/part1_2
+          - title: "3.3"
+            file: aim2/part1/part1_3
+      - title: Chapter 4
+        file: aim2/part2
+        sections:
+          - title: "4.1"
+            file: aim2/part2/part2_1
+          - title: "4.2"
+            file: aim2/part2/part2_2
+          - title: "4.3"
+            file: aim2/part2/part2_3
