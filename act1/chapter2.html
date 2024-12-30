@@ -508,7 +508,6 @@ document.write(`
         <span class="s1">&#39;Identity (Self, Family, Community, Tribe)&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Tokenization/Commodification&#39;</span><span class="p">,</span> 
         <span class="s1">&#39;Adversary Networks (Biological)&#39;</span><span class="p">,</span> 
-
     <span class="p">],</span>
     <span class="s1">&#39;Output&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Joy&#39;</span><span class="p">,</span> <span class="s1">&#39;Freude&#39;</span><span class="p">,</span> <span class="s1">&#39;Kapital&#39;</span><span class="p">,</span> <span class="s1">&#39;Schaden&#39;</span><span class="p">,</span> <span class="s1">&#39;Ecosystem&#39;</span><span class="p">]</span>
 <span class="p">}</span>
@@ -539,13 +538,23 @@ document.write(`
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Hidden&#39;</span><span class="p">]):</span>
         <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">pos</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="n">i</span><span class="p">)</span>
-        <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;lightgreen&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="s1">&#39;Identity (Self, Family, Community, Tribe)&#39;</span><span class="p">:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;paleturquoise&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">node</span> <span class="o">==</span> <span class="s1">&#39;Tokenization/Commodification&#39;</span><span class="p">:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;lightgreen&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">node</span> <span class="o">==</span> <span class="s1">&#39;Adversary Networks (Biological)&#39;</span><span class="p">:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;lightsalmon&#39;</span><span class="p">)</span>
 
     <span class="c1"># Add output layer nodes</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Output&#39;</span><span class="p">]):</span>
         <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">pos</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="n">i</span><span class="p">)</span>
-        <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;lightsalmon&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="s1">&#39;Joy&#39;</span><span class="p">:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;paleturquoise&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">node</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Freude&#39;</span><span class="p">,</span> <span class="s1">&#39;Kapital&#39;</span><span class="p">,</span> <span class="s1">&#39;Schaden&#39;</span><span class="p">]:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;lightgreen&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">node</span> <span class="o">==</span> <span class="s1">&#39;Ecosystem&#39;</span><span class="p">:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;lightsalmon&#39;</span><span class="p">)</span>
 
     <span class="c1"># Add edges based on weights</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">in_node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Input&#39;</span><span class="p">]):</span>
@@ -583,7 +592,7 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/eda35d0d8e9b9f083dd288d0313094c49aa5aaee0ff91d143d0d470d80cfcee1.png" src="../_images/eda35d0d8e9b9f083dd288d0313094c49aa5aaee0ff91d143d0d470d80cfcee1.png" />
+<img alt="../_images/9d31a6e3fa70087bf0c976b68636c10565191710c3156bdb9d12929aced6a28b.png" src="../_images/9d31a6e3fa70087bf0c976b68636c10565191710c3156bdb9d12929aced6a28b.png" />
 </div>
 </div>
 </section>
