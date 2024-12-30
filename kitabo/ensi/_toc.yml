@@ -5,9 +5,9 @@ chapters:
   # Sing O Muse!
   - file: act1/part1
     sections:
-      - title: Peccata Mundi
+      - title: Sin
         file: act1/chapter1
-      - title: Behold the Lamb of God
+      - title: Agnus Dei
         file: act1/chapter2
       - title: Dona Nobis Pacem
         file: act1/chapter3
