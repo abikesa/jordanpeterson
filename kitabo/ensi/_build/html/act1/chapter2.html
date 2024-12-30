@@ -488,6 +488,102 @@ document.write(`
 <h3>Payoffs and Paradoxes<a class="headerlink" href="#payoffs-and-paradoxes" title="Permalink to this heading">#</a></h3>
 <p>The output layer of colonialism’s network is deeply paradoxical. It generated immense capital gains for imperial powers, but at the cost of alienation and environmental degradation in colonized regions. Yet, it also catalyzed cultural fusions, creating hybrid identities and knowledge systems that continue to shape the modern world.</p>
 <p>Colonialism’s legacy underscores the duality of innovation and exploitation. It compressed vast networks of humanity into a transformative force, for better or worse. The task now is to reckon with its outputs—to untangle its contributions to environmental sustainability, social harmony, and alienation—and reweight our global priorities for a more equitable future.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+
+<span class="c1"># Define the neural network structure</span>
+<span class="n">layers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Input&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Resourcefulness&#39;</span><span class="p">,</span> <span class="s1">&#39;Resources&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Hidden&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;Identity (Self, Family, Community, Tribe)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Tokenization/Commodification&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Adversary Networks (Biological)&#39;</span><span class="p">,</span> 
+
+    <span class="p">],</span>
+    <span class="s1">&#39;Output&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Joy&#39;</span><span class="p">,</span> <span class="s1">&#39;Freude&#39;</span><span class="p">,</span> <span class="s1">&#39;Kapital&#39;</span><span class="p">,</span> <span class="s1">&#39;Schaden&#39;</span><span class="p">,</span> <span class="s1">&#39;Ecosystem&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># Adjacency matrix defining the weight connections</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Input-Hidden&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]]),</span>
+    <span class="s1">&#39;Hidden-Output&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">]</span>
+    <span class="p">])</span>
+<span class="p">}</span>
+
+<span class="c1"># Visualizing the Neural Network</span>
+<span class="k">def</span> <span class="nf">visualize_nn</span><span class="p">(</span><span class="n">layers</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">node_colors</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Add input layer nodes</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Input&#39;</span><span class="p">]):</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">pos</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;paleturquoise&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Add hidden layer nodes</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Hidden&#39;</span><span class="p">]):</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">pos</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;lightgreen&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Add output layer nodes</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Output&#39;</span><span class="p">]):</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">pos</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;lightsalmon&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Add edges based on weights</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">in_node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Input&#39;</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">hid_node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Hidden&#39;</span><span class="p">]):</span>
+            <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">in_node</span><span class="p">,</span> <span class="n">hid_node</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weights</span><span class="p">[</span><span class="s1">&#39;Input-Hidden&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">hid_node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Hidden&#39;</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">out_node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Output&#39;</span><span class="p">]):</span>
+            <span class="c1"># Adjust thickness for specific edges</span>
+            <span class="k">if</span> <span class="n">hid_node</span> <span class="o">==</span> <span class="s2">&quot;Identity (Self, Family, Community, Tribe)&quot;</span> <span class="ow">and</span> <span class="n">out_node</span> <span class="o">==</span> <span class="s2">&quot;Kapital&quot;</span><span class="p">:</span>
+                <span class="n">width</span> <span class="o">=</span> <span class="mi">6</span>
+            <span class="k">elif</span> <span class="n">hid_node</span> <span class="o">==</span> <span class="s2">&quot;Tokenization/Commodification&quot;</span> <span class="ow">and</span> <span class="n">out_node</span> <span class="o">==</span> <span class="s2">&quot;Kapital&quot;</span><span class="p">:</span>
+                <span class="n">width</span> <span class="o">=</span> <span class="mi">6</span>
+            <span class="k">elif</span> <span class="n">hid_node</span> <span class="o">==</span> <span class="s2">&quot;Adversary Networks (Biological)&quot;</span> <span class="ow">and</span> <span class="n">out_node</span> <span class="o">==</span> <span class="s2">&quot;Kapital&quot;</span><span class="p">:</span>
+                <span class="n">width</span> <span class="o">=</span> <span class="mi">6</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">width</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">hid_node</span><span class="p">,</span> <span class="n">out_node</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weights</span><span class="p">[</span><span class="s1">&#39;Hidden-Output&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">)</span>
+
+    <span class="c1"># Draw the graph</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">edge_labels</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">get_edge_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;weight&#39;</span><span class="p">)</span>
+    <span class="n">widths</span> <span class="o">=</span> <span class="p">[</span><span class="n">G</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">v</span><span class="p">][</span><span class="s1">&#39;width&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;width&#39;</span> <span class="ow">in</span> <span class="n">G</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">()]</span>
+    <span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span>
+        <span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="n">node_colors</span><span class="p">,</span> <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> 
+        <span class="n">node_size</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">widths</span>
+    <span class="p">)</span>
+    <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_edge_labels</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">edge_labels</span><span class="o">=</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">edge_labels</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Social Neural Network Visualizing Capital Gains Maximization&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">visualize_nn</span><span class="p">(</span><span class="n">layers</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/eda35d0d8e9b9f083dd288d0313094c49aa5aaee0ff91d143d0d470d80cfcee1.png" src="../_images/eda35d0d8e9b9f083dd288d0313094c49aa5aaee0ff91d143d0d470d80cfcee1.png" />
+</div>
+</div>
 </section>
 </section>
 </section>
