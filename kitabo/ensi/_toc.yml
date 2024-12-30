@@ -15,42 +15,42 @@ chapters:
   # Sing O Muse!
   - file: act2/part2
     sections:
-      - title: Anarchy, Determinism, Biology
+      - title: Fermentation
         file: act2/chapter1
-      - title: Oligarchy, Cartels, Sociology
+      - title: Charcoal
         file: act2/chapter2
-      - title: Monarchy, Fantasies, Psychology
+      - title: Mezcal
         file: act2/chapter3
 
   # Apollo
   - file: act3/part3
     sections:
-      - title: Apres Moi, La Déluge!
+      - title: 'Déluge 🌊'
         file: act3/act1
         sections:
-          - title: Henry Flynn on Rodri's Absence
+          - title: Cosmic
             file: act3/part1/part1_1
-          - title: Guardiola on Chicago Bulls Sans Jordan
+          - title: System
             file: act3/part1/part1_2
-          - title: Nodes, Edges, Weights, Meaning
+          - title: Failure
             file: act3/part1/part1_3
-      - title: Heaven's Gates & Fortresses
+      - title: 'Anchor ⚓️'
         file: act3/act2
         sections:
-          - title: Animal Insticts & The Gambler
+          - title: Base
             file: act3/part2/part2_1
-          - title: 'What is Great in Man: Transformational Ventures'
+          - title: Risk
             file: act3/part2/part2_2
-          - title: 'Übermensch, Maternal, Umbrella ☔️'
+          - title: 'Attribute ☔️'
             file: act3/part2/part2_3
-      - title: Iterative Refinement of Mankind?
+      - title: 'Iterate 🧭'
         file: act3/act3
         sections:
-          - title: Optimism and the Very Linear Narrative
+          - title: Resource
             file: act3/part3/part3_1
-          - title: The Cheerful, Absurdist Pessimist
+          - title: Transformation
             file: act3/part3/part3_2
-          - title: Conclusion, Epilogue, Notes
+          - title: Identity
             file: act3/part3/part3_3
 
   - file: bibliography

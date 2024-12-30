@@ -1,4 +1,4 @@
-# Bibliography, References, Archetypes
+# Bibliography 
 
 
 ```{bibliography}
