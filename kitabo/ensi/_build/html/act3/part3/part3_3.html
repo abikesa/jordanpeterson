@@ -405,7 +405,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Orient</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Orient</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lawrence-of-arabia">Lawrence of Arabia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#yes-minister">Yes Minister</a></li>
+</ul>
+</li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
 </ul>
 
@@ -421,6 +425,191 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="orient">
 <h1>Orient<a class="headerlink" href="#orient" title="Permalink to this heading">#</a></h1>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+
+<span class="c1"># Define the neural network structure</span>
+<span class="n">layers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Pre-Input&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Tact&#39;</span><span class="p">,</span> <span class="s1">&#39;Firmness&#39;</span><span class="p">,</span> <span class="s1">&#39;Soundness&#39;</span><span class="p">,</span> <span class="s1">&#39;Cosmos&#39;</span><span class="p">,</span> <span class="s1">&#39;Earth&#39;</span><span class="p">,</span> <span class="s1">&#39;Life&#39;</span><span class="p">,</span> <span class="s1">&#39;Humanity&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Input&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Resourcefulness&#39;</span><span class="p">,</span> <span class="s1">&#39;Resources&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Hidden&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;Identity (Self, Family, Community, Tribe)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Tokenization/Commodification&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Adversary Networks (Biological)&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;Output&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Joy&#39;</span><span class="p">,</span> <span class="s1">&#39;Freude&#39;</span><span class="p">,</span> <span class="s1">&#39;Kapital&#39;</span><span class="p">,</span> <span class="s1">&#39;Schaden&#39;</span><span class="p">,</span> <span class="s1">&#39;Ecosystem&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># Define weights for the connections</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Pre-Input-Input&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">]</span>
+    <span class="p">]),</span>
+    <span class="s1">&#39;Input-Hidden&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]]),</span>
+    <span class="s1">&#39;Hidden-Output&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">]</span>
+    <span class="p">])</span>
+<span class="p">}</span>
+
+<span class="c1"># Visualization function</span>
+<span class="k">def</span> <span class="nf">visualize_nn_center_aligned</span><span class="p">(</span><span class="n">layers</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">node_colors</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Define a fixed x-axis coordinate for alignment</span>
+    <span class="n">center_x</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Calculate the vertical positions for each node in a layer</span>
+    <span class="k">def</span> <span class="nf">calculate_y_positions</span><span class="p">(</span><span class="n">layer</span><span class="p">):</span>
+        <span class="n">layer_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+        <span class="n">start_y</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">layer_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>  <span class="c1"># Center the layer vertically</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">start_y</span> <span class="o">+</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">layer_size</span><span class="p">)]</span>
+
+    <span class="c1"># Add pre-input layer nodes</span>
+    <span class="n">y_positions</span> <span class="o">=</span> <span class="n">calculate_y_positions</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Pre-Input&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Pre-Input&#39;</span><span class="p">]):</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">layer</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">pos</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">center_x</span> <span class="o">-</span> <span class="mi">3</span><span class="p">,</span> <span class="n">y_positions</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>  <span class="c1"># Shift x-axis to left</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Tact&#39;</span><span class="p">,</span> <span class="s1">&#39;Firmness&#39;</span><span class="p">,</span> <span class="s1">&#39;Soundness&#39;</span><span class="p">]:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;paleturquoise&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;lightgray&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Add input layer nodes</span>
+    <span class="n">y_positions</span> <span class="o">=</span> <span class="n">calculate_y_positions</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Input&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Input&#39;</span><span class="p">]):</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">pos</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">center_x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="n">y_positions</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Resourcefulness&#39;</span><span class="p">]:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;paleturquoise&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;lightgray&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Add hidden layer nodes</span>
+    <span class="n">y_positions</span> <span class="o">=</span> <span class="n">calculate_y_positions</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Hidden&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Hidden&#39;</span><span class="p">]):</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">pos</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">center_x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y_positions</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="s1">&#39;Identity (Self, Family, Community, Tribe)&#39;</span><span class="p">:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;paleturquoise&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">node</span> <span class="o">==</span> <span class="s1">&#39;Tokenization/Commodification&#39;</span><span class="p">:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;lightgreen&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">node</span> <span class="o">==</span> <span class="s1">&#39;Adversary Networks (Biological)&#39;</span><span class="p">:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;lightsalmon&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Add output layer nodes</span>
+    <span class="n">y_positions</span> <span class="o">=</span> <span class="n">calculate_y_positions</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Output&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Output&#39;</span><span class="p">]):</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">pos</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">center_x</span><span class="p">,</span> <span class="n">y_positions</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="s1">&#39;Joy&#39;</span><span class="p">:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;paleturquoise&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">node</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Freude&#39;</span><span class="p">,</span> <span class="s1">&#39;Kapital&#39;</span><span class="p">,</span> <span class="s1">&#39;Schaden&#39;</span><span class="p">]:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;lightgreen&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">node</span> <span class="o">==</span> <span class="s1">&#39;Ecosystem&#39;</span><span class="p">:</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;lightsalmon&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Add edges for Pre-Input to Input</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pre_node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Pre-Input&#39;</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">in_node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Input&#39;</span><span class="p">]):</span>
+            <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">pre_node</span><span class="p">,</span> <span class="n">in_node</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weights</span><span class="p">[</span><span class="s1">&#39;Pre-Input-Input&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+
+    <span class="c1"># Add edges for Input to Hidden</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">in_node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Input&#39;</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">hid_node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Hidden&#39;</span><span class="p">]):</span>
+            <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">in_node</span><span class="p">,</span> <span class="n">hid_node</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weights</span><span class="p">[</span><span class="s1">&#39;Input-Hidden&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+
+    <span class="c1"># Add edges for Hidden to Output</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">hid_node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Hidden&#39;</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">out_node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;Output&#39;</span><span class="p">]):</span>
+            <span class="c1"># Adjust thickness for specific edges</span>
+            <span class="k">if</span> <span class="n">hid_node</span> <span class="o">==</span> <span class="s2">&quot;Identity (Self, Family, Community, Tribe)&quot;</span> <span class="ow">and</span> <span class="n">out_node</span> <span class="o">==</span> <span class="s2">&quot;Kapital&quot;</span><span class="p">:</span>
+                <span class="n">width</span> <span class="o">=</span> <span class="mi">6</span>
+            <span class="k">elif</span> <span class="n">hid_node</span> <span class="o">==</span> <span class="s2">&quot;Tokenization/Commodification&quot;</span> <span class="ow">and</span> <span class="n">out_node</span> <span class="o">==</span> <span class="s2">&quot;Kapital&quot;</span><span class="p">:</span>
+                <span class="n">width</span> <span class="o">=</span> <span class="mi">6</span>
+            <span class="k">elif</span> <span class="n">hid_node</span> <span class="o">==</span> <span class="s2">&quot;Adversary Networks (Biological)&quot;</span> <span class="ow">and</span> <span class="n">out_node</span> <span class="o">==</span> <span class="s2">&quot;Kapital&quot;</span><span class="p">:</span>
+                <span class="n">width</span> <span class="o">=</span> <span class="mi">6</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">width</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">hid_node</span><span class="p">,</span> <span class="n">out_node</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weights</span><span class="p">[</span><span class="s1">&#39;Hidden-Output&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">)</span>
+
+    <span class="c1"># Draw the graph</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
+    <span class="n">edge_labels</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">get_edge_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;weight&#39;</span><span class="p">)</span>
+    <span class="n">widths</span> <span class="o">=</span> <span class="p">[</span><span class="n">G</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">v</span><span class="p">][</span><span class="s1">&#39;width&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;width&#39;</span> <span class="ow">in</span> <span class="n">G</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">()]</span>
+    <span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span>
+        <span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="n">node_colors</span><span class="p">,</span> <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
+        <span class="n">node_size</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">widths</span>
+    <span class="p">)</span>
+    <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_edge_labels</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">edge_labels</span><span class="o">=</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">edge_labels</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Center-Aligned Neural Network Visualization&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">visualize_nn_center_aligned</span><span class="p">(</span><span class="n">layers</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../../_images/f0c76d878ba0c2004cabd2446b7394fedb5f246d05728430d92eb1c96abfcc1a.png" src="../../_images/f0c76d878ba0c2004cabd2446b7394fedb5f246d05728430d92eb1c96abfcc1a.png" />
+</div>
+</div>
+<section id="lawrence-of-arabia">
+<h2>Lawrence of Arabia<a class="headerlink" href="#lawrence-of-arabia" title="Permalink to this heading">#</a></h2>
+<iframe src="https://www.youtube.com/embed/i0IzV1q9g9Q" style="width:80%; height:350px;"></iframe>
+<p><strong>“Lawrence of Arabia” as Paleturquoise and the Oxford PPE Archetype</strong></p>
+<p>David Lean’s <em>Lawrence of Arabia</em> captures the essence of an archetype that aligns with the paleturquoise node: tact, soundness, firmness, and resourcefulness, though it ultimately critiques the hollowness of these traits when removed from their moral or existential grounding.</p>
+<p><strong>Paleturquoise as Tact and Resourcefulness</strong></p>
+<p>The film’s protagonist, T.E. Lawrence, embodies a striking blend of resourcefulness and tact—traits that allow him to navigate the complexities of Bedouin tribal politics, British imperial interests, and the harsh desert environment. His ability to unify disparate tribes against the Ottoman Empire demonstrates a level of ingenuity and diplomacy that feels quintessentially “paleturquoise.” Lawrence doesn’t lead with brute force or dominance but with a charismatic vision and an almost performative sense of self-possession. This mirrors the way the Oxford PPE archetype is often imagined: a figure of intellectual dexterity, able to weave disparate interests into a coherent strategy.</p>
+<p>However, the film also highlights the cost of this tact and resourcefulness. While Lawrence’s achievements are impressive, they often come at the expense of his own psyche, eroding his identity and moral clarity. This fragility reveals the limitations of the paleturquoise archetype when it becomes detached from deeper grounding.</p>
+<p><strong>The Oxford PPE Stereotype</strong></p>
+<p>The Oxford PPE graduate, a recurring caricature in political and cultural discourse, mirrors many of Lawrence’s traits but in a more institutionalized and less romanticized form. The stereotype is one of strategic competence, tactical brilliance, and an ability to glide through global networks of power with polished ease. Like Lawrence, these individuals are often seen as mediators between conflicting worlds—bridging policy, academia, and geopolitics with an air of effortless confidence.</p>
+<p>The critique of the Oxford PPE archetype, however, lies in its perceived detachment from the visceral realities of those it claims to serve. Much like Lawrence, whose grand vision for Arab unity is ultimately co-opted by imperialist interests, the PPE alum is often seen as a figure of tactical skill without genuine moral commitment. They are resourceful and firm in achieving outcomes but lack a sense of rootedness or responsibility for the consequences.</p>
+<p><strong>Lawrence as a Critique of Paleturquoise</strong></p>
+<p>The film doesn’t simply celebrate Lawrence’s brilliance; it dismantles it. His tact and resourcefulness are shown as double-edged swords, enabling him to achieve extraordinary feats but leaving him isolated, alienated, and ultimately disillusioned. The desert, a symbol of purity and harsh beauty, becomes a stage where Lawrence’s resourcefulness is both glorified and deconstructed. His achievements feel increasingly hollow as they are absorbed into the machinery of empire.</p>
+<p>Similarly, the Oxford PPE archetype faces criticism for its tendency to overvalue competence at the expense of authenticity or ethical clarity. The alumni network, often mocked for producing politicians and bureaucrats who manage rather than lead, reflects the same tension present in Lawrence: the ability to navigate power structures without challenging their foundations.</p>
+<p><strong>Paleturquoise’s Double-Edged Nature</strong></p>
+<p>Ultimately, <em>Lawrence of Arabia</em> serves as both an ode to and a critique of the paleturquoise archetype. It recognizes the value of tact, soundness, firmness, and resourcefulness but questions their worth when disconnected from a higher purpose. Lawrence’s tragedy is that he embodies these traits so fully that he loses sight of himself and becomes a pawn in a larger, morally ambiguous game.</p>
+<p>For the Oxford PPE archetype, the lesson is clear: resourcefulness and tact must be paired with integrity and self-awareness. Without these, the paleturquoise becomes a shallow tool for navigating power rather than a meaningful framework for transformative leadership.</p>
+</section>
+<section id="yes-minister">
+<h2>Yes Minister<a class="headerlink" href="#yes-minister" title="Permalink to this heading">#</a></h2>
+<iframe src="https://www.youtube.com/embed/91JFYP52Mf0" style="width:80%;height:350px;"></iframe>
+<p><strong>“Yes, Minister” as a Cambridge Counterpoint to Oxford’s Civil Service Hegemony</strong></p>
+<p>The brilliance of <em>Yes, Minister</em> lies in its razor-sharp satire of Britain’s bureaucratic machinery, where the Oxford-educated civil service reigns supreme, perpetually outmaneuvering the less polished and often idealistic ministers they ostensibly serve. Written by Antony Jay and Jonathan Lynn, two Cambridge graduates, the series is a masterclass in subtle class warfare, reflecting not only Cambridge’s penchant for analytical critique but also a deep understanding of institutional dynamics. It mocks both the Oxford-dominated civil service and the hapless ministerial archetype, epitomized in the LSE-educated Jim Hacker.</p>
+<p><strong>The Oxford-Cambridge Tension</strong></p>
+<p>The Oxford-Cambridge rivalry is subtly embedded in the fabric of <em>Yes, Minister</em>. The civil service, led by Sir Humphrey Appleby, represents the Oxford ideal: urbane, tactically brilliant, and fluent in the language of obfuscation. Sir Humphrey’s dialogues are dazzling displays of verbal gymnastics, a hallmark of Oxford’s tutorial-style education, which prizes rhetorical skill and strategic ambiguity. This is the paleturquoise archetype taken to its zenith—soundness, tact, firmness, and resourcefulness weaponized to maintain the status quo.</p>
+<p>In contrast, Jim Hacker, the minister, represents the outsider—a product of the London School of Economics (LSE), known for its focus on pragmatic, real-world problem-solving and left-leaning ideals. Hacker’s constant bumbling and naivety are a direct jab at this archetype, painting him as a well-meaning but ultimately ineffectual foil to the Oxford-educated mandarins who effortlessly outmaneuver him.</p>
+<p><strong>Cambridge as the Authorial Voice</strong></p>
+<p>Cambridge, with its reputation for intellectual rigor and systemic critique, occupies a meta-role in the series. Jay and Lynn, as Cambridge graduates, take delight in dissecting the power games and self-perpetuating nature of the Oxford-dominated civil service. Their critique is not simply of individual actors like Sir Humphrey but of an entire culture that prizes maintaining control over achieving meaningful change.</p>
+<p>The civil service’s obsession with process over outcomes—ensuring that nothing ever really changes—is a quintessentially Cambridge critique of the Oxford approach to governance. Where Oxford emphasizes rhetorical brilliance and tactical adaptability, Cambridge, by contrast, values analytical depth and a willingness to challenge entrenched systems. This tension drives the show’s humor and its biting satire.</p>
+<p><strong>The LSE Minister as an Object of Ridicule</strong></p>
+<p>Jim Hacker’s portrayal is another layer of the satire, aimed at exposing the limitations of a different kind of archetype: the well-intentioned but ideologically driven LSE alumnus. Hacker is eager to make changes and challenge the system but lacks the intellectual finesse and strategic acumen to do so effectively. His education has prepared him to see problems in stark, practical terms but not to navigate the labyrinthine power structures that stand in the way of solutions.</p>
+<p>The humor often comes from Hacker’s haplessness as he tries to implement policies only to be thwarted by Sir Humphrey’s Oxford-honed brilliance. The series subtly critiques the LSE’s reputation for producing idealists who, though armed with ideas, lack the polish and resourcefulness required to survive in the political trenches.</p>
+<p><strong>Paleturquoise as Both a Strength and a Trap</strong></p>
+<p>Sir Humphrey embodies the paleturquoise traits of tact, soundness, firmness, and resourcefulness, but his brilliance is fundamentally self-serving. He is a guardian of inertia, using his considerable talents to preserve the civil service’s dominance rather than to address the country’s challenges. This is a caricature of the Oxford ethos: a mastery of systems and rhetoric that prioritizes equilibrium over transformation.</p>
+<p>In contrast, Jim Hacker, while lacking Humphrey’s finesse, represents a different kind of failure. His inability to anticipate the consequences of his actions or to match the civil service’s resourcefulness highlights the limitations of an idealistic, LSE-style approach that underestimates the complexity of real-world governance.</p>
+<p><strong>Cambridge’s Triumph in Satire</strong></p>
+<p>The brilliance of <em>Yes, Minister</em> lies in its ability to critique both the Oxford and LSE archetypes while positioning Cambridge’s analytical detachment as the ultimate vantage point. By skewering the civil service’s Machiavellian brilliance and the minister’s naïve earnestness, Jay and Lynn showcase Cambridge’s intellectual heritage: a capacity to deconstruct systems with ruthless precision while maintaining a wry sense of humor.</p>
+<p>Ultimately, <em>Yes, Minister</em> serves as a cautionary tale about the dangers of paleturquoise brilliance when untethered from purpose and the pitfalls of well-meaning pragmatism without strategic acumen. It is a testament to Cambridge’s ability to critique power from the outside, exposing the absurdities of both entrenched elites and their would-be reformers.</p>
+</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
@@ -490,7 +679,11 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Orient</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Orient</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lawrence-of-arabia">Lawrence of Arabia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#yes-minister">Yes Minister</a></li>
+</ul>
+</li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
 </ul>
 
